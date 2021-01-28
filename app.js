@@ -48,7 +48,7 @@ function startInquiry() {
             name: "managerEmail",
             message: "Please enter your email here.",
             validate: response => {
-                const goodEmail = response.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+                const goodEmail = response.match(/\S+@\S+\.\S+/);
                 if (goodEmail) {
                     return true;
                 }
@@ -79,7 +79,7 @@ function startInquiry() {
     function managerTeam() {
         console.log("Great! So, let's see, who do we have on our team?");
         inquirer.prompt([{
-            type: "rawlist",
+            type: "list",
             name: "employeeType",
             message: "What kind of employee would you like to add?",
             choices: [
@@ -96,8 +96,9 @@ function startInquiry() {
                 case 'An Intern':
                     createIntern();
                     break;
-                case 'No more, thank you.':
-                    startInquiry();
+                default:
+                    renderTeam();
+
 
             }
         });
@@ -137,7 +138,7 @@ function startInquiry() {
             name: "engineerEmail",
             message: "Please enter your email here!",
             validate: response => {
-                const goodEmail = response.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+                const goodEmail = response.match(/\S+@\S+\.\S+/);
                 if (goodEmail) {
                     return true;
                 }
@@ -201,7 +202,7 @@ function startInquiry() {
             name: "internEmail",
             message: "Please enter your email here!",
             validate: response => {
-                const goodEmail = response.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+                const goodEmail = response.match(/\S+@\S+\.\S+/);
                 if (goodEmail) {
                     return true;
                 }
@@ -222,7 +223,7 @@ function startInquiry() {
         }
 
         ]).then(answers => {
-            const intern = new intern(answers.internName, answers.idNum, answers.internEmail, answers.schoolName);
+            const intern = new Intern(answers.internName, answers.idNum, answers.internEmail, answers.schoolName);
             allTeam.push(intern);
             idNums.push(answers.idNum);
             managerTeam();
